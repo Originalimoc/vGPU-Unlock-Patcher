@@ -1,0 +1,11 @@
+3cd176b510ebc9236505babc1d9aa3356a478bd505cc85dcd405fbe309639f5b
+
+# Bypass the rejection of previously supported, official vGPU cards.
+# This is inspired by a patch from PolloLoco - thank you!
+# - Search for the "Supported vGPUs count: %d" string, the array of
+#   rejected device IDs is below it.
+# - Follow the XREF, and patch to guarantee that the comparison with
+#   the ID in `ptr` fails.
+00004588: 39 09
+
+f16929924123e412e200f42dda158fd2f7a255f1242615d4887b72f392287c56

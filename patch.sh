@@ -3,8 +3,8 @@
 BASEDIR=$(dirname $0)
 
 GNRL="NVIDIA-Linux-x86_64-580.126.09"
-VGPU="NVIDIA-Linux-x86_64-580.126.08-vgpu-kvm"
-GRID="NVIDIA-Linux-x86_64-580.126.09-grid"
+VGPU="NVIDIA-Linux-x86_64-580.159.01-vgpu-kvm"
+GRID="NVIDIA-Linux-x86_64-580.159.03-grid"
 WSYS="NVIDIA-Windows-x86_64-582.16"
 
 NVOSS=false
@@ -618,8 +618,8 @@ $TDMABUFEXPORT && {
     cp -p ${TARGET}/kernel-open/nvidia/nv-dmabuf.c ${TARGET}/kernel/nvidia/nv-dmabuf.c
     applypatch ${TARGET} test-dmabuf-export.patch
 }
-$DO_VGPU && applypatchx ${TARGET} vgpu-kvm-support-v6.18-namespaced-variables.patch
-$DO_VGPU && applypatchx ${TARGET} vgpu-kvm-support-v6.19-pfn_address_space.patch
+#$DO_VGPU && applypatchx ${TARGET} vgpu-kvm-support-v6.18-namespaced-variables.patch
+#$DO_VGPU && applypatchx ${TARGET} vgpu-kvm-support-v6.19-pfn_address_space.patch
 $DO_VGPU && applypatchx ${TARGET} vgpu-kvm-fault-path-acquires-mmap_lock.patch
 $DO_VGPU && applypatchx ${TARGET} vgpu-kvm-optional-vgpu-v2.patch
 
@@ -658,6 +658,7 @@ if $DO_VGPU; then
     # refer people to https://krutavshah.github.io/GPU_Virtualization-Wiki/overview.html#graphics-cards.
     # However, this breaks the NixOS module.
     vcfgclone ${TARGET}/vgpuConfig.xml 0x1E30 0x12BA 0x1E07 0x0000	# RTX 2080 Ti
+    vcfgclone ${TARGET}/vgpuConfig.xml 0x1E30 0x12BA 0x1F0B 0x0000	# CMP 40HX
     vcfgclone ${TARGET}/vgpuConfig.xml 0x1E30 0x12BA 0x1E84 0x0000	# RTX 2070 super 8GB
     vcfgclone ${TARGET}/vgpuConfig.xml 0x1E30 0x12BA 0x1E81 0x0000	# RTX 2080 super 8GB
     vcfgclone ${TARGET}/vgpuConfig.xml 0x1E30 0x12BA 0x1f03 0x0000	# RTX 2060 12GB
